@@ -10,8 +10,8 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   const name = req.body.name
-  
-  res.send(`Hello ${name}!`)
+
+  res.status(201).send(`Hello ${name}!`)
 })
 
 app.listen(port, () => {
