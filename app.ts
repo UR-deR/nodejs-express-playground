@@ -13,9 +13,8 @@ app.post('/', (req, res) => {
   if (contentType !== 'application/json') {
     return res.status(400).send('Bad Request');
   }
-  const name = req.body.name;
 
-  res.status(201).send(`Hello ${name}!`);
+  res.status(201).send(req.body);
 });
 
 app.listen(port, () => {
