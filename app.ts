@@ -1,11 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cookieParser = require('cookie-parser');
 const port = 3000;
+
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => { 
+  const referrer = req.header("referer");
+  res.locals.referrer = referrer;
+  console.log(req.cookies);
+  next();
+},
+  express.static('public', {
+    
+    setHeaders: (res, path) => {
+      res.cookie("id", 1, {
+        sameSite: "none",
+        secure: true
+      });
+      res.cookie("website", res.locals.referrer, {
+        sameSite: "none",
+        secure: true
+      })
+    }
+})
+);
 
 
 app.get('/', (req, res) => {
@@ -36,4 +60,16 @@ app.post("/form-urlencoded", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+const siteA = express();
+siteA.use(express.static('public-a'));
+siteA.listen(8081, () => {
+  console.log('Site A listening on port 8081');
+});
+
+const siteB = express();
+siteB.use(express.static('public-b'));
+siteB.listen(8082, () => {
+  console.log('Site B listening on port 8082');
 });
