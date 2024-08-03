@@ -7,7 +7,43 @@
 </head>
 <body>
     <h1>サイトB</h1>
-        <img src="https://f6ef-240b-c010-423-514b-7d01-5b44-f07e-7f20.ngrok-free.app/sample-image.jpg"                    
-        >
+        <!-- <img src="https://f6ef-240b-c010-423-514b-7d01-5b44-f07e-7f20.ngrok-free.app/sample-image.jpg"                    
+        > -->
+    <button id="btn1">
+        request with preflight
+    </button>
+    <br>
+    <br>
+    <button id="btn2">
+        simple request
+    </button>
 </body>
+<script>
+    // preflightが発生する
+    const button = document.getElementById('btn1');
+    button.addEventListener('click', () => {
+        fetch('http://localhost:3000/cors1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+    });
+
+    // preflightが発生しない
+    const button2 = document.getElementById('btn2');
+    button2.addEventListener('click', () => {
+        fetch('http://localhost:3000/cors2', {
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+    });
+</script>
 </html>

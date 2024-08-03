@@ -83,13 +83,18 @@ const cors = require('cors')
 const corsOptions = {
   origin: 'http://localhost:8081',
   optionsSuccessStatus: 200,
-  methods: ['POST']
+  methods: ['GET','POST']
 }
 
-app.options('/cors', cors(corsOptions))
+app.options('/cors1', cors(corsOptions))
 
-app.post("/cors", cors(corsOptions),(req, res) => {  
+app.post("/cors1", cors(corsOptions), (req, res) => {  
   res.status(200).json({
-    message: 'CORS request is successful'
+    message: 'recieved response from another domain with cors'
   });
+});
+
+app.get("/cors2", cors(corsOptions), (req, res) => {  
+  res.set('Content-Type', 'text/plain');
+  res.send('recieved response from another origin without cors');
 });
