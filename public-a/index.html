@@ -8,6 +8,22 @@
 <body>
 
     <h1>サイトA</h1>
-    <!-- <img src="localhost:8080/sample-image.jpg"> -->
+     <button id="btn">
+        request to port 3000
+     </button>
 </body>
+<script>
+    const button = document.getElementById('btn');
+    button.addEventListener('click', () => {
+        fetch('http://localhost:3000/cors', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+    });
+</script>
 </html>

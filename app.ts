@@ -73,3 +73,20 @@ siteB.use(express.static('public-b'));
 siteB.listen(8082, () => {
   console.log('Site B listening on port 8082');
 });
+
+// CORSについて学ぶ
+const cors = require('cors')
+
+const corsOptions = {
+  origin: 'http://localhost:8081',
+  optionsSuccessStatus: 200,
+  methods: ['POST']
+}
+
+app.options('/cors', cors(corsOptions))
+
+app.post("/cors", cors(corsOptions),(req, res) => {  
+  res.status(200).json({
+    message: 'CORS request is successful'
+  });
+});
