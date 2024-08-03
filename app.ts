@@ -10,27 +10,7 @@ app.use(express.json());
 app.use(bodyParser.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => { 
-  const referrer = req.header("referer");
-  res.locals.referrer = referrer;
-  console.log(req.cookies);
-  next();
-},
-  express.static('public', {
-    
-    setHeaders: (res, path) => {
-      res.cookie("id", 1, {
-        sameSite: "none",
-        secure: true
-      });
-      res.cookie("website", res.locals.referrer, {
-        sameSite: "none",
-        secure: true
-      })
-    }
-})
-);
-
+//リクエストをパースするwebサーバーを作成する
 
 app.get('/', (req, res) => {
   res.send({
@@ -61,6 +41,29 @@ app.post("/form-urlencoded", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+//サードパーティクッキーについて理解する
+
+app.use((req, res, next) => { 
+  const referrer = req.header("referer");
+  res.locals.referrer = referrer;
+  console.log(req.cookies);
+  next();
+},
+  express.static('public', {
+    
+    setHeaders: (res, path) => {
+      res.cookie("id", 1, {
+        sameSite: "none",
+        secure: true
+      });
+      res.cookie("website", res.locals.referrer, {
+        sameSite: "none",
+        secure: true
+      })
+    }
+})
+);
 
 const siteA = express();
 siteA.use(express.static('public-a'));
