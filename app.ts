@@ -95,6 +95,13 @@ app.post("/cors1", cors(corsOptions), (req, res) => {
 });
 
 app.get("/cors2", cors(corsOptions), (req, res) => {  
-  res.set('Content-Type', 'text/plain');
   res.send('recieved response from another origin without cors');
+});
+
+app.get("/cors3", cors(corsOptions), (req, res) => {  
+  res.json(
+    {
+      message: 'recieved response from another origin without cors'
+    }
+  );
 });

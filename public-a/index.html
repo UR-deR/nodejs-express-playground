@@ -16,6 +16,18 @@
         <button id="btn2">
             simple request
         </button>
+     <br>
+     <br>
+     <a href="http://localhost:3000/cors2">
+        aタグを用いたリクエスト
+     </a>
+     <br>
+     <br>
+        <button id="btn3">
+            no-corsだが、application/jsonを指定
+        </button>
+     <br>
+     <br>
 </body>
 <script>
     // preflightが発生する
@@ -38,6 +50,20 @@
         fetch('http://localhost:3000/cors2', {
             headers: {
                 'Content-Type': 'text/plain'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+    });
+
+    //no-corsだが、application/jsonを指定
+    const button3 = document.getElementById('btn3');
+    button3.addEventListener('click', () => {
+        fetch('http://localhost:3000/cors3', {
+            headers: {
+                'Content-Type': 'application/json',
+                'mode': 'no-cors'
             }
         })
         .then(res => res.json())
