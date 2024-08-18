@@ -105,3 +105,22 @@ app.get("/cors3", cors(corsOptions), (req, res) => {
     }
   );
 });
+
+// キャッシュについて理解する
+
+const siteC = express();
+siteC.use(express.static('images'));
+siteC.listen(8083, () => {
+  console.log('Site C listening on port 8083');
+});
+
+const IMAGE_PATH = __dirname + '/images/sample-image.jpg';
+
+siteC.get("/cache", (req, res) => {
+  res.header('Cache-Control', 'public, max-age=31536000');
+  res.sendFile(IMAGE_PATH);
+});
+
+siteC.get("/no-cache", (req, res) => {
+  res.sendFile(IMAGE_PATH);
+});
