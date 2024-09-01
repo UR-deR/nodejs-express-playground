@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 },
   express.static('public', {
     
-    setHeaders: (res, path) => {
+    setHeaders: (res) => {
       res.cookie("id", 1, {
         sameSite: "none",
         secure: true
