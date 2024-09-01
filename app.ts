@@ -114,7 +114,7 @@ siteC.listen(8083, () => {
   console.log('Site C listening on port 8083');
 });
 
-const IMAGE_PATH = __dirname + '/images/sample-image.jpg';
+const IMAGE_PATH = __dirname + '/images/sample-image-c.jpg';
 
 siteC.get("/cache", (req, res) => {
   res.header('Cache-Control', 'public, max-age=31536000');
